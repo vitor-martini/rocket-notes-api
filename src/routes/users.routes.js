@@ -2,9 +2,9 @@ const { Router } = require("express");
 const UserController = require("../controllers/UsersController.js")
 
 const usersRoutes = Router();
-const userController = new UserController();
-usersRoutes.post("/", userController.create);
-usersRoutes.put("/:id", userController.update);
+const usersController = new UserController();
+usersRoutes.post("/", usersController.create);
+usersRoutes.put("/:id", usersController.update);
 
 // function isAdminMiddleware(request, response, next) {
 //   if (!request.body.isAdmin) {
