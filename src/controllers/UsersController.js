@@ -20,12 +20,12 @@ class UsersController {
       "INSERT INTO users (name, email, password) VALUES(?, ?, ?)", 
       [name, email, hashedPassword]);
 
-    response.status(201).json({ name, email, password });
+    return response.status(201).json({ name, email, password });
   }
   
   async update(request, response) {
     const { name, email, password, old_password } = request.body;
-    const { id } = request.params;
+    const { id } = request.user;
 
     const database = await sqliteConnection();
     const user = await database.get("SELECT * FROM users WHERE id = ?", [id]);
@@ -68,7 +68,7 @@ class UsersController {
       `, 
       [user.name, user.email, user.password, id])
 
-    response.json();
+    return response.json();
   }
 
 }
