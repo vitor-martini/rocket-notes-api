@@ -31,17 +31,48 @@
 					"name": "Update",
 					"request": {
 						"method": "PUT",
-						"header": [],
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer {{authToken}}",
+								"type": "text"
+							}
+						],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n    \"password\": 123,\n    \"old_password\": 432\n}",
+							"raw": "{\n    \"password\": 123,\n    \"old_password\": 321\n}",
 							"options": {
 								"raw": {
 									"language": "json"
 								}
 							}
 						},
-						"url": "http://{{HOST}}:{{PORT}}/users/6"
+						"url": "http://{{HOST}}:{{PORT}}/users"
+					},
+					"response": []
+				},
+				{
+					"name": "Avatar",
+					"request": {
+						"method": "PATCH",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer {{authToken}}",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "avatar",
+									"type": "file",
+									"src": "/home/vitor/Downloads/foto 2.jpeg"
+								}
+							]
+						},
+						"url": "http://{{HOST}}:{{PORT}}/users/avatar"
 					},
 					"response": []
 				}
@@ -54,7 +85,13 @@
 					"name": "Create",
 					"request": {
 						"method": "POST",
-						"header": [],
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer {{authToken}}",
+								"type": "text"
+							}
+						],
 						"body": {
 							"mode": "raw",
 							"raw": "{\n    \"title\": \"Introdução ao Nodejs\",\n    \"description\": \"Aulas de Nodejs do curso explorer da RocketSeat\",\n    \"tags\": [\"node\", \"express\"],\n    \"links\": [\"https://app.rocketseat.com.br/classroom/stage-08/group/query-builder/lesson/cadastrando-nota\", \"https://app.rocketseat.com.br/journey/explorer/overview\"]\n}",
@@ -72,7 +109,14 @@
 					"name": "Show",
 					"request": {
 						"method": "GET",
-						"header": []
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer {{authToken}}",
+								"type": "text"
+							}
+						],
+						"url": "http://{{HOST}}:{{PORT}}/notes/5"
 					},
 					"response": []
 				},
@@ -80,7 +124,13 @@
 					"name": "Delete",
 					"request": {
 						"method": "DELETE",
-						"header": [],
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer {{authToken}}",
+								"type": "text"
+							}
+						],
 						"url": "http://{{HOST}}:{{PORT}}/notes/3"
 					},
 					"response": []
@@ -89,9 +139,15 @@
 					"name": "Index",
 					"request": {
 						"method": "GET",
-						"header": [],
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer {{authToken}}",
+								"type": "text"
+							}
+						],
 						"url": {
-							"raw": "http://{{HOST}}:{{PORT}}/notes?user_id=8&title=Nodejs&tags=node, express",
+							"raw": "http://{{HOST}}:{{PORT}}/notes?title=Nodejs&tags=node, express",
 							"protocol": "http",
 							"host": [
 								"{{HOST}}"
@@ -101,10 +157,6 @@
 								"notes"
 							],
 							"query": [
-								{
-									"key": "user_id",
-									"value": "8"
-								},
 								{
 									"key": "title",
 									"value": "Nodejs"
@@ -127,24 +179,67 @@
 					"name": "Index",
 					"request": {
 						"method": "GET",
-						"header": [],
-						"url": {
-							"raw": "http://{{HOST}}:{{PORT}}/tags?8",
-							"protocol": "http",
-							"host": [
-								"{{HOST}}"
-							],
-							"port": "{{PORT}}",
-							"path": [
-								"tags"
-							],
-							"query": [
-								{
-									"key": "8",
-									"value": null
-								}
-							]
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer {{authToken}}",
+								"type": "text"
+							}
+						],
+						"url": "http://{{HOST}}:{{PORT}}/tags"
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Sessions",
+			"item": [
+				{
+					"name": "Create",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"var jsonData = pm.response.json();",
+									"",
+									"if (jsonData.token) {",
+									"    pm.environment.set(\"authToken\", jsonData.token);",
+									"}",
+									""
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
 						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"email\": \"vitor-martini@email.com\",\n    \"password\": 123\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": "http://{{HOST}}:{{PORT}}/sessions/create"
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Files",
+			"item": [
+				{
+					"name": "Avatar",
+					"request": {
+						"method": "GET",
+						"header": []
 					},
 					"response": []
 				}
