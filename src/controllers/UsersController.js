@@ -39,7 +39,7 @@ class UsersController {
       throw new AppError("This email belongs to another user.")
     }
 
-    if ((password && !old_password)) {
+    if ((password && !old_password) || (!password && old_password)) {
       throw new AppError("In order to redefine the password you need to inform both the new and old passwords");
     }
 
