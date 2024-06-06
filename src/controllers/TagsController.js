@@ -9,7 +9,10 @@ class TagsController {
       throw new AppError("User id is required.")
     }
 
-    const tags = await knex("tags").where({ user_id }).orderBy("name");
+    const tags = await knex("tags")
+      .where({ user_id })
+      .groupBy("name")
+      .orderBy("name");
 
     return response.json(tags)
   }
