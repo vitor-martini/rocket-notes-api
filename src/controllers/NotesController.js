@@ -73,7 +73,7 @@ class NotesController {
       ])
       .where("notes.user_id", user_id)
       .whereLike("notes.title", `%${title ?? ""}%`)
-      .innerJoin("tags", "notes.id", "tags.note_id")
+      .leftJoin("tags", "notes.id", "tags.note_id")
       .orderBy("notes.title");
 
     if(tags) {
