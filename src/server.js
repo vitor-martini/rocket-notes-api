@@ -32,5 +32,5 @@ app.use((error, request, response, next) => {
 })
 
 app.listen(PORT, () => {
-  console.log(`Listen on http://localhost:${PORT}`);
+  console.log("Server running");
 })
