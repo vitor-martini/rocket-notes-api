@@ -7,7 +7,7 @@ class UserRepositoryInMemory {
 
   async create({ name, email, password }) {
     const user = {
-      id: Math.floor(Math.random() * 1000) + 1,
+      id: this.users.length + 1,
       email,
       name,
       password 
@@ -16,6 +16,23 @@ class UserRepositoryInMemory {
     this.users.push(user)
 
     return { id: user.id };
+  }
+
+  async findById(id) {
+    return await this.users.find(user => user.id === id)
+  }
+
+  async update({ user, id }) {
+    const mockedUser = await this.users.find(user => user.id === id)
+    mockedUser.name = user.name
+    mockedUser.email = user.email
+    mockedUser.password = user.password
+
+    return { 
+      name: mockedUser.name, 
+      email: mockedUser.email, 
+      password: mockedUser.password
+    }
   }
 }
 
